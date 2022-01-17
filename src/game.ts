@@ -5,16 +5,16 @@ import { fill } from "./algorithm";
 import { gameStructure, GAP, MAX_COL, MAX_ROW } from "./config";
 import { startCountdown } from "./time";
 import { showUI } from "./ui";
-import { resetUser } from "./user";
+import { resetUser } from "./user/main";
 import { wait } from "./utils";
-import { getCutSectionSize, initSection as initSections } from "./view";
+import { getDebrisSize, initDebris } from "./view";
 
 export let gridView: Sprite;
 export const createGame = () => {
     Loader.shared.
         add('imageFu', 'http://wildfirecode.com/objects/puzzle/fu551.jpg')
-        .load(() => {
-            const [cutSectionWidth, cutSectionHeight] = getCutSectionSize();
+        .load(async () => {
+            const [cutSectionWidth, cutSectionHeight] = getDebrisSize();
 
             gridView = parseXML(gameStructure,
                 {
@@ -27,14 +27,13 @@ export const createGame = () => {
             getApp().stage.addChild(gridView);////将显示对象树添加到stage
             gridView.interactive = true;
 
-            initSections(fill(MAX_COL*MAX_ROW));
+            initDebris(fill(MAX_COL * MAX_ROW));
 
-            wait(1000).then(async () => {
-                resetUser();
+            wait(2000).then(async () => {
+                await resetUser();
                 startCountdown();
                 showUI();
-            });
-
+            })
         })
 
 }

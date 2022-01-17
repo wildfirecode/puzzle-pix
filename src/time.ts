@@ -1,6 +1,6 @@
 import { CountDown } from "teddi-lodash";
 import { updateCountdown } from "./ui";
-import { onUserTimeout } from "./user";
+import { onUserTimeout } from "./user/main";
 
 const countdown = new CountDown({
     intervalDelay: 1000,
@@ -18,7 +18,7 @@ const countdown = new CountDown({
 
 export const startCountdown = () => {
     countdown.start({
-        date: Date.now() + 3600 * 1000,
+        date: Date.now() + 20 * 1000,
     });
 }
 

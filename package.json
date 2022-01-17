@@ -8,7 +8,7 @@
     "@tweenjs/tween.js": "^18.6.4",
     "pixi.js": "^6.2.1",
     "teddi-lodash": "^1.0.7",
-    "xml-pixi": "^0.0.1"
+    "xml-pixi": "^0.0.3"
   },
   "devDependencies": {
     "teddi-cli": "^0.0.2"

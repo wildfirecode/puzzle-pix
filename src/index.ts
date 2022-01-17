@@ -4,6 +4,7 @@ import { initParser } from "xml-pixi";
 import { ASSETS } from "./config";
 import { createGame } from "./game";
 import { initUI } from "./ui";
+import { initDnd } from "./user";
 
 //Create a Pixi Application
 let app = new Application({
@@ -28,6 +29,7 @@ requestAnimationFrame(animate)
 
 const setup = () => {
 
+    initDnd(app.stage)
     initParser(ASSETS);
 
     createGame();

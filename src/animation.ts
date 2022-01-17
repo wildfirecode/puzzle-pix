@@ -1,44 +1,36 @@
-import { Container } from "pixi.js";
 import * as TWEEN from "@tweenjs/tween.js";
-import { FLIP_TYPE } from "./enum";
+import { fill } from "./algorithm";
+import { GAP, MAX_COL, MAX_ROW } from "./config";
+import { gridView } from "./game";
+import { getDebrisSize } from "./view";
 
-/** 翻转所有的卡片到正面或背面 */
-export const playFipAllAnimation = (type: FLIP_TYPE, gridView: Container) => {
+export const playAllAnimation = (initialIdList: number[]) => {
+    const filled = fill(MAX_COL * MAX_ROW);
     return Promise.all(
-        gridView.children.map(
-            (child: Container) => playFlipAnimation(type, child))
+        filled.map(
+            currentPosition => playItemAnimation(
+                currentPosition, initialIdList.indexOf(currentPosition)
+            )
+        )
     )
 }
-/** 翻转单个卡片到正面或背面 */
-export const playFlipAnimation = (type: FLIP_TYPE, cardView: Container) => {
+
+export const playItemAnimation =  async (currentPosition: number, targetPosition: number) => {
+    const target = gridView.children[currentPosition];
+    const [cutSectionWidth, cutSectionHeight] = getDebrisSize();
+    const cellWidth = cutSectionWidth + GAP;
+    const cellHeight = cutSectionHeight + GAP;
+    const targetX = targetPosition % MAX_COL * cellWidth;
+    const targetY = Math.floor(targetPosition / MAX_COL) * cellHeight;
+    await playMoveAnimation(target, targetX, targetY)
+}
+
+export const playMoveAnimation = (target, targetX, targetY) => {
     return new Promise((resolve) => {
-        const toFront = type == FLIP_TYPE.FRONT;
-        const [back, front] = cardView.children;
-
-        const DURATION = 300;
-
-        back.visible = front.visible = true;
-        back.scale.x = front.scale.x = 0;
-
-        const callback = () => {
-            back.visible = !toFront;
-            front.visible = toFront;
-            resolve(cardView);
-        }
-
-        const tweenBack = new TWEEN.Tween(back.scale);
-        const tweenFront = new TWEEN.Tween(front.scale);
-        if (toFront) {
-            back.scale.x = 1;
-            tweenBack.to({ x: 0 }, DURATION).start().onComplete(() => {
-                tweenFront.to({ x: 1 }, DURATION).start().onComplete(callback);
-            });
-        } else {
-            front.scale.x = 1;
-            tweenFront.to({ x: 0 }, DURATION).start().onComplete(() => {
-                tweenBack.to({ x: 1 }, DURATION).start().onComplete(callback);
-            });
-        }
-
-    })
+        const DURATION = 700;
+        const tween = new TWEEN.Tween(target);
+        tween.to({ x: targetX, y: targetY }, DURATION).start().onComplete(() => {
+            resolve(true)
+        });
+    });
 }

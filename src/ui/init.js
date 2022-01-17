@@ -1,4 +1,4 @@
-import { highlightCardPairs, autoFlip, resetUser } from "../user"
+import { highlightDebrisPairs, autoDragDrop, resetUser } from "../user/main"
 import { startCountdown } from "../time"
 
 export let appUI
@@ -12,11 +12,11 @@ export const initUI = () => {
     },
     methods: {
       highlight: function () {
-        highlightCardPairs()
+        highlightDebrisPairs()
       },
 
       flip: function () {
-        autoFlip()
+        autoDragDrop()
       },
 
       reset: function () {
@@ -36,6 +36,9 @@ export const updateCountdown = (val) => {
 
 export const showUI = () => {
   appUI.seen = true;
+}
+export const hideUI = () => {
+  appUI.seen = false;
 }
 
 export const showResetButton = () => {
