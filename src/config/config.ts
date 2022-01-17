@@ -1,5 +1,5 @@
-export const MAX_COL = 4;
-export const MAX_ROW = 4;
+export const MAX_COL = 3;
+export const MAX_ROW = 3;
 /**
  * 切片之间的间隔
  */

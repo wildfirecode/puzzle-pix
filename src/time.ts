@@ -18,7 +18,7 @@ const countdown = new CountDown({
 
 export const startCountdown = () => {
     countdown.start({
-        date: Date.now() + 20 * 1000,
+        date: Date.now() + 3600 * 1000,
     });
 }
 
