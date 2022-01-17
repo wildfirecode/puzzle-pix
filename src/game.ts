@@ -13,7 +13,7 @@ export let gridView: Sprite;
 export const createGame = () => {
     Loader.shared.
         add('imageFu', 'http://wildfirecode.com/objects/puzzle/fu551.jpg')
-        .load((loader, resource) => {
+        .load(() => {
             const [cutSectionWidth, cutSectionHeight] = getCutSectionSize();
 
             gridView = parseXML(gameStructure,
@@ -22,9 +22,9 @@ export const createGame = () => {
                     rows: MAX_ROW,
                     cellWidth: cutSectionWidth + GAP,
                     cellHeight: cutSectionHeight + GAP
-                }) as Sprite;
+                }) as Sprite; //parseXML返回的是显示对象树
 
-            getApp().stage.addChild(gridView);
+            getApp().stage.addChild(gridView);////将显示对象树添加到stage
             gridView.interactive = true;
 
             initSections(fill(MAX_COL*MAX_ROW));

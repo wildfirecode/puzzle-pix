@@ -4,7 +4,6 @@
  * @param row 行数
  * @param sectionWidth 切片宽度
  * @param sectionHeight 切片高度
- * @returns 
  */
 export const getCutSectionsData = (col, row, sectionWidth, sectionHeight) => {
     const list = [];

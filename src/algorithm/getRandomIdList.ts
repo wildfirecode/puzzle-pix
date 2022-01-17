@@ -16,7 +16,7 @@ const shuffle = (array: number[]) => {
 }
 
 /**
- * 获取切片图案Id的随机列表
+ * 获取打乱后的碎片Id列表
  * @returns 
  */
 export const getRandomIdList = (n) => {
