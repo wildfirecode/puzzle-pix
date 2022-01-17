@@ -1,30 +1,40 @@
+import { Loader, Sprite } from "pixi.js";
 import { parseXML } from "xml-pixi";
-import { playFipAllAnimation } from "./animation";
-import { CARD_SIZE, gameStructure, MAX_COL, MAX_ROW } from "./config";
-import { FLIP_TYPE } from "./enum";
+import { getApp } from ".";
+import { fill } from "./algorithm";
+import { gameStructure, GAP, MAX_COL, MAX_ROW } from "./config";
 import { startCountdown } from "./time";
 import { showUI } from "./ui";
-import { addUserInteraction, resetUser } from "./user";
+import { resetUser } from "./user";
 import { wait } from "./utils";
-import { flipAllCardTo, initCardType } from "./view";
+import { getCutSectionSize, initSection as initSections } from "./view";
 
-export let gridView;
-
+export let gridView: Sprite;
 export const createGame = () => {
-    gridView = parseXML(gameStructure,
-        { cols: MAX_COL, rows: MAX_ROW, cellWidth: CARD_SIZE[0], cellHeight: CARD_SIZE[1] });
+    Loader.shared.
+        add('imageFu', 'http://wildfirecode.com/objects/puzzle/fu551.jpg')
+        .load((loader, resource) => {
+            const [cutSectionWidth, cutSectionHeight] = getCutSectionSize();
 
-    initCardType(gridView);
+            gridView = parseXML(gameStructure,
+                {
+                    cols: MAX_COL,
+                    rows: MAX_ROW,
+                    cellWidth: cutSectionWidth + GAP,
+                    cellHeight: cutSectionHeight + GAP
+                }) as Sprite;
 
-    flipAllCardTo(FLIP_TYPE.FRONT, gridView);
+            getApp().stage.addChild(gridView);
+            gridView.interactive = true;
 
-    wait(1000).then(async () => {
-        resetUser();
-        startCountdown();
+            initSections(fill(MAX_COL*MAX_ROW));
 
-        showUI();
-    });
+            wait(1000).then(async () => {
+                resetUser();
+                startCountdown();
+                showUI();
+            });
 
-    return gridView
+        })
+
 }
-

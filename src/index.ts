@@ -11,6 +11,8 @@ let app = new Application({
     height: 750 / window.innerWidth * window.innerHeight,
 });
 
+export const getApp = () => { return app }
+
 app.renderer.view.style.width = '100%'
 app.renderer.view.style.height = '100%'
 
@@ -24,13 +26,11 @@ function animate(time) {
 }
 requestAnimationFrame(animate)
 
-const setup =  () => {
+const setup = () => {
 
     initParser(ASSETS);
 
-    const game = createGame();
-
-    app.stage.addChild(game);
+    createGame();
 
     initUI();
 }

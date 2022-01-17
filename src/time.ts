@@ -7,7 +7,6 @@ const countdown = new CountDown({
 
     onTick: (total) => {
         updateCountdown(Math.ceil(total / 1000))
-        console.log('onTick', Math.ceil(total / 1000))
     },
     
     onComplete: () => {
@@ -19,7 +18,7 @@ const countdown = new CountDown({
 
 export const startCountdown = () => {
     countdown.start({
-        date: Date.now() + 60 * 1000,
+        date: Date.now() + 3600 * 1000,
     });
 }
 

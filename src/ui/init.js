@@ -14,14 +14,17 @@ export const initUI = () => {
       highlight: function () {
         highlightCardPairs()
       },
+
       flip: function () {
         autoFlip()
       },
+
       reset: function () {
         resetUser();
         startCountdown();
         hideResetButton();
-      },
+      }
+
     }
   })
 

@@ -1,3 +1,4 @@
 export * from './getGridCellIndex';
-export * from './match';
-export * from './type';
+export * from './getRandomIdList';
+export * from './getCutSectionsData';
+export * from './fill';
